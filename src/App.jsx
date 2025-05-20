@@ -48,18 +48,18 @@ const App = () => {
             <div className="flex items-center space-x-4">
               <button 
                 onClick={toggleDarkMode}
-                className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-800"
+                className="p-2 rounded-full bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
                 aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {isDarkMode ? (
                   (() => {
                     const SunIcon = getIcon('sun');
-                    return <SunIcon className="w-5 h-5 text-surface-300" />;
+                    return <SunIcon className="w-5 h-5 text-yellow-400 transition-transform duration-200" />;
                   })()
                 ) : (
                   (() => {
                     const MoonIcon = getIcon('moon');
-                    return <MoonIcon className="w-5 h-5 text-surface-600" />;
+                    return <MoonIcon className="w-5 h-5 text-surface-700 transition-transform duration-200" />;
                   })()
                 )}
               </button>
