@@ -1,7 +1,18 @@
 import * as Icons from 'lucide-react';
 
 export const getIcon = (iconName) => {
-  // Try direct match first
+  // If the icon is specifically for the theme toggle, use appropriate fallbacks
+  if (name === 'sun' && !LucideIcons[name]) {
+    // Return a component that renders a sun emoji character
+    return (props) => <span {...props}>☀️</span>;
+  }
+  
+  if (name === 'moon' && !LucideIcons[name]) {
+    // Return a component that renders a moon emoji character
+    return (props) => <span {...props}>🌙</span>;
+  }
+  
+  return LucideIcons[name] || LucideIcons.Smile;
   if (Icons[iconName] && typeof Icons[iconName] === 'function') {
     return Icons[iconName];
   }
