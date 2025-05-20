@@ -17,6 +17,6 @@ export const getIcon = (iconName) => {
     }
   }
   
-  // Fallback to Sun icon instead of Smile
-  return Icons.Sun;
+  // Fallback to Smile icon
+  return Icons.Smile;
 };
