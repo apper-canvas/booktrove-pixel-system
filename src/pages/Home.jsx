@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { getIcon } from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
+import { addToCart } from '../store/cartSlice';
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const dispatch = useDispatch();
   
   const categories = [
     { id: 'all', name: 'All Books' },
@@ -20,6 +23,12 @@ const Home = () => {
     setSelectedCategory(categoryId);
     toast.info(`Browsing ${categories.find(cat => cat.id === categoryId).name}`);
   };
+  
+  const handleAddToCart = (book) => {
+    dispatch(addToCart(book));
+    toast.success(`${book.title} added to cart!`);
+  };
+  
   
   // Featured book data
   const featuredBooks = [
@@ -168,7 +177,7 @@ const Home = () => {
                   </span>
                   <button
                     className="btn-accent text-sm py-1.5"
-                    onClick={() => toast.success(`${book.title} added to cart!`)}
+                    onClick={() => handleAddToCart(book)}
                   >
                     Add to Cart
                   </button>

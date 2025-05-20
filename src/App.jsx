@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { getIcon } from './utils/iconUtils';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import { selectCartTotal } from './store/cartSlice';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -30,6 +32,8 @@ const App = () => {
   const toggleDarkMode = () => {
     setIsDarkMode(prev => !prev);
   };
+
+  const cartItemCount = useSelector(selectCartTotal);
 
   return (
     <>
@@ -64,13 +68,13 @@ const App = () => {
                 )}
               </button>
               
-              <button className="relative p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-800">
+              <button className="relative p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-800" aria-label="View shopping cart">
                 {(() => {
                   const ShoppingCartIcon = getIcon('shopping-cart');
                   return <ShoppingCartIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" />;
                 })()}
-                <span className="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  3
+                <span className={`absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center ${cartItemCount === 0 ? 'hidden' : ''}`}>
+                  {cartItemCount}
                 </span>
               </button>
             </div>
