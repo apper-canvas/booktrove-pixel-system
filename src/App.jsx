@@ -207,7 +207,6 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/browse" element={<BrowseBooks />} />
             <Route path="/book/:id" element={<BookDetail />} />
-            <Route path="/sell" element={<SellBooks />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation" element={<OrderConfirmation />} />
@@ -242,6 +241,7 @@ const App = () => {
                       const Icon = getIcon(platform);
                       return <Icon className="w-5 h-5" />;
                     })()}
+                  </a>
                 ))}
               </div>
             </div>
