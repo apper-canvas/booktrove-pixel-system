@@ -211,7 +211,7 @@ const Home = () => {
               })()}
             </div>
             <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>
-            <p className="text-surface-600 dark:text-surface-300">{benefit.description}</p>
+            <p className="text-surface-600 dark:text-surface-200">{benefit.description}</p>
           </div>
         ))}
       </section>
