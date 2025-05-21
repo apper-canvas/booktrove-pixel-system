@@ -56,44 +56,13 @@ const Home = () => {
   };
   
   
-  // Featured book data
-  const featuredBooks = [
-    {
-      id: 1,
-      title: "The Midnight Library",
-      author: "Matt Haig",
-      cover: "https://source.unsplash.com/FHQ2B9U9DCA/400x600",
-      price: 16.99,
-      rating: 4.5,
-      condition: "New",
-      description: "Between life and death there is a library. When Nora finds herself in the Midnight Library, she has a chance to make things right."
-    },
-    {
-      id: 2,
-      title: "Project Hail Mary",
-      author: "Andy Weir",
-      cover: "https://source.unsplash.com/cckf4TsHAuw/400x600",
-      price: 19.99,
-      rating: 4.8,
-      condition: "New",
-      description: "A lone astronaut must save the earth from disaster in this incredible new science-based thriller from the #1 New York Times bestselling author of The Martian."
-    },
-    {
-      id: 3,
-      title: "Think Again",
-      author: "Adam Grant",
-      cover: "https://source.unsplash.com/YLSwjSy7stw/400x600",
-      price: 14.99,
-      rating: 4.3,
-      condition: "Like New",
-      description: "The bestselling author of Give and Take and Originals examines the critical art of rethinking: learning to question your opinions and open other people's minds."
-    }
-  ];
 
   return (
     <div className="space-y-8">
       {/* Hero Section */}
       <section className="relative rounded-2xl overflow-hidden">
+        <div className="flex gap-2 overflow-x-auto py-2">
+          {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => handleCategoryChange(category.id)}
@@ -115,7 +84,7 @@ const Home = () => {
       {/* Featured Books Section */}
       <section>
         <div className="flex justify-between items-center mb-6">
-          {categories.map((category) => (
+          <h2 className="text-2xl font-bold dark:text-surface-100">Featured Books</h2>
           <a href="#" className="text-primary dark:text-primary-light font-medium flex items-center">
             View all
             {(() => {
@@ -124,7 +93,7 @@ const Home = () => {
             })()}
           </a>
         </div>
-            >
+        
           {featuredBooks.map((book) => (
             <motion.div
               key={book.id}
@@ -145,7 +114,7 @@ const Home = () => {
               <div className="p-4">
                 <div className="flex items-center mb-1">
                   <div className="flex">
-        
+                   </div>
         {loading ? (
           <div className="flex justify-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-r-transparent"></div>
@@ -174,21 +143,20 @@ const Home = () => {
                       ${parseFloat(book.price).toFixed(2)}
                     </span>
                   </div>
-                  <span className="text-xs font-medium px-2 py-1 bg-surface-100 dark:bg-surface-700 rounded-full">
+                </div>
                 <div className="p-4">
                   <div className="flex items-center mb-1">
                     <div className="flex">
-                      {Array.from({ length: 5 }).map((_, i) => {
-                        const StarIcon = getIcon(i < Math.floor(book.rating) ? 'star' : 'star-outline');
-                        return (
-                          <StarIcon 
-                            key={i} 
-                            className={`w-4 h-4 ${i < Math.floor(book.rating) ? 'text-amber-400' : 'text-surface-300'}`} 
-                          />
-                        );
-                      })}
                     </div>
-                    <span className="text-xs text-surface-500 ml-1">({book.rating})</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Benefits Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-10">
         {[
           {
@@ -204,10 +172,9 @@ const Home = () => {
           {
             icon: 'rotate-ccw',
             title: 'Easy Returns',
-        </div>
-        )}
+            description: 'Not what you expected? Return it within 30 days for a full refund.'
           }
-      
+        ].map((benefit, index) => (
           <div key={index} className="card p-6 text-center">
             <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
               {(() => {
