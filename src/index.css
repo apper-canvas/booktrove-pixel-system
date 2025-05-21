@@ -91,7 +91,7 @@
   }
   
   .solid {
-    @apply border border-surface-200 dark:border-surface-700;
+    @apply border border-surface-200 dark:border-surface-700 z-0;
   }
   
   .glass {
