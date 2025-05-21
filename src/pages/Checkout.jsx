@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -399,7 +399,7 @@ const Checkout = () => {
               <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
                 <p>{orderError}</p>
               </div>
-                </div>
+              )}
               </div>
               <div className="flex justify-between">
                 <button 
