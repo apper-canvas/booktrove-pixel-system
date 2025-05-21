@@ -220,3 +220,7 @@ const Home = () => {
 };
 
 export default Home;
+              </div> 
+              <p className="text-surface-600 dark:text-surface-200">
+              <p className="text-surface-600 dark:text-surface-200">
+              <p className="text-surface-600 dark:text-surface-200">
