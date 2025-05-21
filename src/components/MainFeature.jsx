@@ -13,10 +13,11 @@ const MainFeature = () => {
   });
   
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
-              <span className="text-sm font-medium dark:text-surface-200">{book.rating} · {book.reviews} reviews</span>
   const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   
-            <h2 className="text-xl font-bold mb-2 dark:text-surface-100">{book.title}</h2>
+  // Categories for book search
+  const categories = [
     { id: '', name: 'All Categories' },
     { id: 'fiction', name: 'Fiction' },
     { id: 'non-fiction', name: 'Non-Fiction' },
@@ -364,6 +365,7 @@ const MainFeature = () => {
                     <img 
                       src={book.cover} 
                       alt={book.title} 
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -372,6 +374,7 @@ const MainFeature = () => {
                     <div>
                       <h4 className="font-bold text-lg line-clamp-1">{book.title}</h4>
                       <p className="text-surface-600 dark:text-surface-400 text-sm mb-1">by {book.author}</p>
+                      <span className="text-sm font-medium dark:text-surface-200">{book.rating} · {book.reviews} reviews</span>
                       <p className="text-surface-500 dark:text-surface-400 text-xs mb-2 line-clamp-2">{book.description}</p>
                       
                       <div className="flex flex-wrap gap-2 mb-2">
