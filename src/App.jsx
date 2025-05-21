@@ -102,7 +102,7 @@ const App = () => {
               {/* Cart Drawer */}
               <div 
                 ref={cartRef}
-                className={`fixed inset-y-0 right-0 z-100 w-full sm:w-96 bg-white dark:bg-surface-800 shadow-xl transform transition-transform duration-300 ease-in-out solid ${
+                className={`fixed inset-y-0 right-0 z-100 w-full sm:w-96 bg-white dark:bg-surface-800 shadow-xl transform transition-transform duration-300 ease-in-out border border-surface-200 dark:border-surface-700 ${
                   isCartOpen ? 'translate-x-0' : 'translate-x-full'
                 } flex flex-col`}
               >
