@@ -143,21 +143,49 @@ const App = () => {
     setIsDarkMode(prev => !prev);
   };
 
-            <div className="flex items-center space-x-4">
   return (
     <AuthContext.Provider value={authMethods}>
       <div className="relative min-h-screen">
         {/* Navigation */}
         <header className="sticky top-0 z-30 bg-white dark:bg-surface-900 shadow-sm border-b border-surface-200 dark:border-surface-700">
           <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="/" className="flex items-center space-x-2">
-              {(() => {
+            
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                >
+                  {isDarkMode ? (
+                    (() => {
+                      const SunIcon = getIcon('sun');
+                      return <SunIcon className="w-5 h-5 text-yellow-400 transition-transform duration-200" />;
+                    })()
+                  ) : (
+                    (() => {
+                      const MoonIcon = getIcon('moon');
+                      return <MoonIcon className="w-5 h-5 text-surface-700 transition-transform duration-200" />;
+                    })()
+                  )}
+                </button>
+                
+                <button 
+                  onClick={() => navigate('/cart')}
+                  aria-label="View shopping cart" 
+                  className="relative"
+                >
+                  {(() => {
+                  const ShoppingCartIcon = getIcon('shopping-cart');
+                  return <ShoppingCartIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" />;
+                })()}
+                <span className={`absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center ${cartItemCount === 0 ? 'hidden' : ''}`}>
+                  {cartItemCount}
+                </span>
+              </button>
               
               {isAuthenticated ? (
                 <div className="relative flex items-center group">
-                  <button 
-                    className="flex items-center space-x-2 p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
-                  >
+                  <button className="flex items-center space-x-2 p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700">
                     <span className="text-sm font-medium hidden md:block">{userState.user?.firstName || 'User'}</span>
                     {(() => {
                       const UserIcon = getIcon('user');
@@ -169,48 +197,6 @@ const App = () => {
                   </button>
                 </div>
               ) : null}
-                const BookIcon = getIcon('book');
-                return <BookIcon className="w-6 h-6 text-primary" />;
-              })()}
-              <span className="text-xl font-bold text-primary">BookTrove</span>
-            </a>
-            
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
-                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {isDarkMode ? (
-                  (() => {
-                    const SunIcon = getIcon('sun');
-                    return <SunIcon className="w-5 h-5 text-yellow-400 transition-transform duration-200" />;
-                  })()
-                ) : (
-                  (() => {
-                    const MoonIcon = getIcon('moon');
-                    return <MoonIcon className="w-5 h-5 text-surface-700 transition-transform duration-200" />;
-                  })()
-                )}
-              </button>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/error" element={<ErrorPage />} />
-              
-              <button 
-                onClick={() => navigate('/cart')}
-            <Route path="/sell" element={isAuthenticated ? <SellBooks /> : <Login />} />
-                aria-label="View shopping cart" 
-            <Route path="/checkout" element={isAuthenticated ? <Checkout /> : <Login />} />
-            <Route path="/order-confirmation" element={isAuthenticated ? <OrderConfirmation /> : <Login />} />
-                  const ShoppingCartIcon = getIcon('shopping-cart');
-                  return <ShoppingCartIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" />;
-                })()}
-                <span className={`absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center ${cartItemCount === 0 ? 'hidden' : ''}`}>
-                  {cartItemCount}
-                </span>
-              </button>
             </div>
           </div>
         </header>
@@ -225,6 +211,11 @@ const App = () => {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/callback" element={<Callback />} />
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="/sell" element={isAuthenticated ? <SellBooks /> : <Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
@@ -251,7 +242,6 @@ const App = () => {
                       const Icon = getIcon(platform);
                       return <Icon className="w-5 h-5" />;
                     })()}
-    </AuthContext.Provider>
                 ))}
               </div>
             </div>
@@ -272,7 +262,7 @@ const App = () => {
         pauseOnHover
         theme={isDarkMode ? "dark" : "light"}
       />
-    </>
+    </AuthContext.Provider>
   );
 };
 
