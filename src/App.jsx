@@ -87,7 +87,7 @@ const App = () => {
               
               <button 
                 onClick={toggleCart}
-                className="relative p-2 rounded-full bg-white dark:bg-surface-800 shadow-sm border border-surface-200 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-700 z-10" 
+                className="relative p-2 rounded-full bg-white dark:bg-surface-800 shadow-sm border border-surface-200 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-700 z-20" 
                 aria-label="View shopping cart" 
               >
                 {(() => {
@@ -102,7 +102,7 @@ const App = () => {
               {/* Cart Drawer */}
               <div 
                 ref={cartRef}
-                className={`fixed inset-y-0 right-0 z-50 w-full sm:w-96 bg-white dark:bg-surface-800 shadow-xl transform transition-transform duration-300 ease-in-out ${
+                className={`fixed inset-y-0 right-0 z-50 w-full sm:w-96 bg-white dark:bg-surface-800 shadow-xl transform transition-transform duration-300 ease-in-out solid ${
                   isCartOpen ? 'translate-x-0' : 'translate-x-full'
                 } flex flex-col`}
               >
@@ -213,7 +213,7 @@ const App = () => {
               {/* Overlay when cart is open */}
               {isCartOpen && (
                 <div 
-                  className="fixed inset-0 bg-black/50 z-40"
+                  className="fixed inset-0 bg-black/70 z-40"
                   onClick={toggleCart}
                 />
               )}

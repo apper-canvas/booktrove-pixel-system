@@ -90,8 +90,12 @@
     display: none;
   }
   
+  .solid {
+    @apply bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700;
+  }
+  
   .glass {
-    @apply bg-white/70 dark:bg-surface-800/70 backdrop-blur-md border border-white/20 dark:border-surface-700/20;
+    @apply bg-white/90 dark:bg-surface-800/90 backdrop-blur-sm border border-white/20 dark:border-surface-700/20;
   }
 }
 
