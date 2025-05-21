@@ -108,8 +108,6 @@ const SellBooks = () => {
     return Object.keys(errors).length === 0;
   };
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
   const handleSubmit = async (e) => {
     if (!validateForm()) return;
     setIsSubmitting(true);
