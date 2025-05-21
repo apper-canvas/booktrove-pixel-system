@@ -22,7 +22,6 @@ const Home = () => {
   
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
-    toast.info(`Browsing ${categories.find(cat => cat.id === categoryId).name}`);
   };
   
   const handleAddToCart = (book) => {
