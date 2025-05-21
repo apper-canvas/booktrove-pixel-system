@@ -41,7 +41,18 @@ const Cart = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Your Shopping Cart</h1>
+      <div className="flex items-center mb-6">
+        <button 
+          onClick={() => navigate('/')}
+          className="btn-outline flex items-center gap-2"
+        >
+          {(() => {
+            const HomeIcon = getIcon('home');
+            return <HomeIcon className="w-4 h-4" />;
+          })()} Back to Home Page
+        </button>
+      </div>
+      <h1 className="text-3xl font-bold mb-6">Your Shopping Cart</h1>
       
       {cartItems.length === 0 ? (
         <div className="text-center py-16 bg-white dark:bg-surface-800 rounded-xl shadow">
