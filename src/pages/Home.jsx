@@ -210,7 +210,7 @@ const Home = () => {
                 return <Icon className="w-8 h-8 text-primary" />;
               })()}
             </div>
-            <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>
+            <h3 className="text-xl font-bold mb-2 dark:text-surface-100">{benefit.title}</h3>
             <p className="text-surface-600 dark:text-surface-200">{benefit.description}</p>
           </div>
         ))}
