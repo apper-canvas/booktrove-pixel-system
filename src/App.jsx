@@ -6,6 +6,8 @@ import { getIcon } from './utils/iconUtils';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { selectCartItems, selectCartTotal, selectCartAmount, updateQuantity, removeFromCart, clearCart } from './store/cartSlice';
+import BrowseBooks from './pages/BrowseBooks';
+import SellBooks from './pages/SellBooks';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -218,6 +220,8 @@ const App = () => {
         <main className="container mx-auto px-4 py-6">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/browse" element={<BrowseBooks />} />
+            <Route path="/sell" element={<SellBooks />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

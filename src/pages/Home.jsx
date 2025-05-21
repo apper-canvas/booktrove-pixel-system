@@ -91,8 +91,8 @@ const Home = () => {
                 Browse Books
               </button>
               <button className="btn border-2 border-white text-white hover:bg-white/10 focus:ring-white">
+              <Link to="/sell" className="btn border-2 border-white text-white hover:bg-white/10 focus:ring-white text-center">
                 Sell Your Books
-              </button>
             </div>
           </motion.div>
         </div>
