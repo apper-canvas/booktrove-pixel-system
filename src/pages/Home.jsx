@@ -131,6 +131,7 @@ const Home = () => {
               return <ArrowRightIcon className="w-4 h-4 ml-1" />;
             })()}
           </a>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredBooks.map((book) => (
             <motion.div
@@ -139,11 +140,9 @@ const Home = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >
-              <h3 className="font-bold text-sm mb-1 truncate dark:text-surface-100">{book.title}</h3>
               <div className="relative h-64 overflow-hidden rounded-t-xl">
                 <img 
-                  alt={book.title} 
-                  className="w-full h-full object-cover"
+                  src={book.cover} alt={book.title} className="w-full h-full object-cover"
                 />
                 <div className="absolute top-2 right-2">
                   <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded">
@@ -166,7 +165,7 @@ const Home = () => {
                   </div>
                   <span className="text-xs text-surface-500 ml-1">({book.rating})</span>
                 </div>
-                <h3 className="font-bold text-lg mb-1">{book.title}</h3>
+                <h3 className="font-bold text-lg mb-1 dark:text-surface-100">{book.title}</h3>
                 <p className="text-surface-600 dark:text-surface-400 text-sm mb-2">by {book.author}</p>
                 <p className="text-surface-500 dark:text-surface-400 text-sm mb-3 line-clamp-2">{book.description}</p>
                 <div className="flex justify-between items-center">
@@ -183,8 +182,9 @@ const Home = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
 
-      {/* Benefits Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-10">
         {[
           {
