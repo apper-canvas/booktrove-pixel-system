@@ -77,7 +77,7 @@ const BookDetail = () => {
             cover: "https://source.unsplash.com/LJ9KY8pIH3E/400x600",
             price: 13.99,
             rating: 4.6,
-              <h1 className="text-2xl md:text-3xl font-bold mb-2 dark:text-surface-100">{book.title}</h1>
+            genre: "thriller",
             condition: "New",
             description: "The Silent Patient is a shocking psychological thriller of a woman's act of violence against her husband—and of the therapist obsessed with uncovering her motive. Alicia Berenson's life is seemingly perfect. A famous painter married to an in-demand fashion photographer, she lives in a grand house overlooking a park in one of London's most desirable areas.",
             publishDate: "2019-02-05",
@@ -89,7 +89,7 @@ const BookDetail = () => {
           {
             id: 5,
             title: "Becoming",
-              <p className="text-lg mb-4 dark:text-surface-200">by <span className="font-medium">{book.author}</span></p>
+            author: "Michelle Obama",
             cover: "https://source.unsplash.com/zSG-kd-L6vw/400x600",
             price: 21.99,
             rating: 4.9,
