@@ -87,8 +87,8 @@ const App = () => {
               
               <button 
                 onClick={toggleCart}
-                className="relative p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-800" 
-                aria-label="View shopping cart"
+                className="relative p-2 rounded-full bg-white dark:bg-surface-800 shadow-sm border border-surface-200 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-700 z-10" 
+                aria-label="View shopping cart" 
               >
                 {(() => {
                   const ShoppingCartIcon = getIcon('shopping-cart');
