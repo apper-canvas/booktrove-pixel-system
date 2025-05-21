@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { getIcon } from '../utils/iconUtils';
+import { useSelector } from 'react-redux';
+import { createListing } from '../services/listingService';
 
+// Component for selling books
 const SellBooks = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -18,6 +21,11 @@ const SellBooks = () => {
   
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  
+  // Get user state from Redux
+  const userState = useSelector(state => state.user);
+  const userId = userState?.user?.userId;
   
   const conditions = [
     { value: 'new', label: 'New' },
@@ -104,12 +112,23 @@ const SellBooks = () => {
     e.preventDefault();
     
     if (!validateForm()) return;
-    
     setIsSubmitting(true);
     
-    // Simulate API call with a timeout
-    setTimeout(() => {
+    // For this example, we'll assume the image URL is already available
+    // In a real application, you would upload the image first, then use the URL
+    const coverImageUrl = formData.coverPreview || "https://source.unsplash.com/random/400x600/?book";
+    
+    try {
+      // Submit the listing using the service
+      await createListing({
+        ...formData,
+        coverImageUrl
+      }, userId);
+      
+      // Show success message
       toast.success('Your book has been listed for sale!');
+      
+      // Reset form
       setFormData({
         title: '',
         author: '',
@@ -120,8 +139,14 @@ const SellBooks = () => {
         coverImage: null,
         coverPreview: null
       });
+      
+      // Redirect to home or listings page
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to create listing: ' + (error.message || 'Unknown error'));
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
   
   return (
@@ -138,11 +163,19 @@ const SellBooks = () => {
       </div>
       
       <div className="card p-6">
-        <p className="text-surface-600 dark:text-surface-400 mb-6">
+        <p className="text-surface-600 dark:text-surface-400 mb-4">
           Fill out the form below to list your book for sale on BookTrove. All listings are reviewed within 24 hours.
         </p>
         
-        <form onSubmit={handleSubmit}>
+        {!userId && (
+          <div className="bg-yellow-100 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 mb-6">
+            <p className="text-yellow-700 dark:text-yellow-400">
+              You need to be logged in to list books for sale. Please <Link to="/login" className="font-bold underline">log in</Link> first.
+            </p>
+          </div>
+        )}
+        
+        <form onSubmit={handleSubmit} className={!userId ? "opacity-60 pointer-events-none" : ""}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
               <label htmlFor="title" className="label">Book Title*</label>
@@ -278,7 +311,7 @@ const SellBooks = () => {
             <button 
               type="submit" 
               className="btn-primary"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !userId}
             >
               {isSubmitting ? (
                 <span className="flex items-center">

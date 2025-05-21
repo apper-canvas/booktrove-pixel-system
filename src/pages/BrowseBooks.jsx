@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { getIcon } from '../utils/iconUtils';
+import { getBooks } from '../services/bookService';
 import { addToCart } from '../store/cartSlice';
 
 const BrowseBooks = () => {
@@ -13,85 +14,47 @@ const BrowseBooks = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('all');
   const [selectedSort, setSelectedSort] = useState('featured');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  const userState = useSelector((state) => state.user);
+  const isAuthenticated = userState?.isAuthenticated || false;
 
-  // Mock book data - in a real app this would come from an API
+  // Fetch books from API
   useEffect(() => {
-    // Simulate API loading delay
-    setTimeout(() => {
-      const mockBooks = [
-        {
-          id: 1,
-          title: "The Midnight Library",
-          author: "Matt Haig",
-          cover: "https://source.unsplash.com/FHQ2B9U9DCA/400x600",
-          price: 16.99,
-          rating: 4.5,
-          genre: "fiction",
-          condition: "New",
-          description: "Between life and death there is a library. When Nora finds herself in the Midnight Library, she has a chance to make things right."
-        },
-        {
-          id: 2,
-          title: "Project Hail Mary",
-          author: "Andy Weir",
-          cover: "https://source.unsplash.com/cckf4TsHAuw/400x600",
-          price: 19.99,
-          rating: 4.8,
-          genre: "scifi",
-          condition: "New",
-          description: "A lone astronaut must save the earth from disaster in this incredible new science-based thriller from the #1 New York Times bestselling author of The Martian."
-        },
-        {
-          id: 3,
-          title: "Think Again",
-          author: "Adam Grant",
-          cover: "https://source.unsplash.com/YLSwjSy7stw/400x600",
-          price: 14.99,
-          rating: 4.3,
-          genre: "non-fiction",
-          condition: "Like New",
-          description: "The bestselling author of Give and Take and Originals examines the critical art of rethinking: learning to question your opinions and open other people's minds."
-        },
-        {
-          id: 4,
-          title: "The Silent Patient",
-          author: "Alex Michaelides",
-          cover: "https://source.unsplash.com/LJ9KY8pIH3E/400x600",
-          price: 13.99,
-          rating: 4.6,
-          genre: "mystery",
-          condition: "New",
-          description: "The Silent Patient is a shocking psychological thriller of a woman's act of violence against her husband—and of the therapist obsessed with uncovering her motive."
-        },
-        {
-          id: 5,
-          title: "Becoming",
-          author: "Michelle Obama",
-          cover: "https://source.unsplash.com/zSG-kd-L6vw/400x600",
-          price: 21.99,
-          rating: 4.9,
-          genre: "biography",
-          condition: "Good",
-          description: "In her memoir, a work of deep reflection and mesmerizing storytelling, Michelle Obama invites readers into her world, chronicling the experiences that have shaped her."
-        },
-        {
-          id: 6,
-          title: "The Lord of the Rings",
-          author: "J.R.R. Tolkien",
-          cover: "https://source.unsplash.com/R6m-crB1Ci4/400x600",
-          price: 28.99,
-          rating: 4.9,
-          genre: "scifi",
-          condition: "New",
-          description: "One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkness bind them."
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // Create filters object for the API
+        const filters = {
+          genre: selectedGenre !== 'all' ? selectedGenre : null,
+          searchQuery: searchQuery || null,
+          sort: selectedSort
+        };
+        
+        // Fetch books with filters
+        const fetchedBooks = await getBooks(filters);
+        
+        if (fetchedBooks) {
+          setBooks(fetchedBooks);
+          setFilteredBooks(fetchedBooks);
+        } else {
+          setBooks([]);
+          setFilteredBooks([]);
         }
-      ];
-      setBooks(mockBooks);
-      setFilteredBooks(mockBooks);
+      } catch (err) {
+        setError('Failed to load books. Please try again later.');
+        console.error('Error fetching books:', err);
+        toast.error('Failed to load books');
+      } finally {
       setLoading(false);
-    }, 800);
-  }, []);
+      }
+    };
+    
+    fetchData();
+  }, [selectedSort, selectedGenre, searchQuery]);
 
   // Filter books based on search, genre, and sort
   useEffect(() => {
@@ -131,9 +94,23 @@ const BrowseBooks = () => {
     setFilteredBooks(result);
   }, [searchQuery, selectedGenre, selectedSort, books]);
 
-  const handleAddToCart = (book) => {
-    dispatch(addToCart(book));
-    toast.success(`${book.title} added to cart!`);
+  const handleAddToCart = async (book) => {
+    if (!isAuthenticated) {
+      toast.info('Please log in to add items to your cart');
+      return;
+    }
+    
+    try {
+      // In a real implementation, we would call the cartService here
+      // For this example, we'll use the Redux action
+      dispatch(addToCart(book));
+      
+      // Show success message
+      toast.success(`${book.title} added to cart!`);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast.error('Failed to add book to cart');
+    }
   };
 
   const genres = [
@@ -199,6 +176,16 @@ const BrowseBooks = () => {
           </select>
         </div>
       </div>
+      
+      {/* Error Display */}
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-4 mb-4">
+          <div className="flex">
+            <div className="py-1">{getIcon('alert-circle') && getIcon('alert-circle')()}</div>
+            <div className="ml-2">{error}</div>
+          </div>
+        </div>
+      )}
 
       {/* Book Results */}
       {loading ? (

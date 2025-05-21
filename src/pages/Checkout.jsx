@@ -4,32 +4,44 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getIcon } from '../utils/iconUtils';
 import { selectCartItems, selectCartAmount, clearCart } from '../store/cartSlice';
+import { createOrder } from '../services/orderService';
 
 const Checkout = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [orderError, setOrderError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const cartItems = useSelector(selectCartItems);
   const cartAmount = useSelector(selectCartAmount);
+  const userState = useSelector(state => state.user);
+  const userId = userState?.user?.userId;
   
-  // Form state
+  // Shipping form state
   const [shippingInfo, setShippingInfo] = useState({
     fullName: '',
     address: '',
     city: '',
     state: '',
     zipCode: '',
-    email: '',
+    email: userState?.user?.emailAddress || '',
     phone: ''
   });
   
+  // Payment form state
   const [paymentInfo, setPaymentInfo] = useState({
     cardNumber: '',
     cardHolder: '',
     expiryDate: '',
     cvv: ''
+  });
+  
+  useEffect(() => {
+    // Prefill email if user is logged in
+    if (userState?.user?.emailAddress) {
+      setShippingInfo(prev => ({ ...prev, email: userState.user.emailAddress }));
+    }
   });
   
   // Form validation
@@ -83,7 +95,7 @@ const Checkout = () => {
   // Navigation between steps
   const nextStep = () => {
     if (step === 1) {
-      // Validate cart is not empty
+      // Check if cart is empty
       if (cartItems.length === 0) {
         toast.error("Your cart is empty. Please add items before checkout.");
         navigate('/browse');
@@ -106,20 +118,17 @@ const Checkout = () => {
   };
   
   // Submit order
-  const placeOrder = () => {
+  const placeOrder = async () => {
     setLoading(true);
+    setOrderError(null);
     
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      
+    try {
       // Generate order number
-      const orderNumber = Math.floor(100000 + Math.random() * 900000);
+      const orderNumber = Math.floor(100000 + Math.random() * 900000).toString();
       
-      // Create order object to potentially send to backend
-      const order = {
+      // Create order object to send to backend
+      const orderData = {
         orderNumber,
-        items: cartItems,
         total: cartAmount,
         shipping: shippingInfo,
         payment: {
@@ -130,18 +139,37 @@ const Checkout = () => {
         date: new Date().toISOString()
       };
       
-      // Store order in session storage for confirmation page
-      sessionStorage.setItem('lastOrder', JSON.stringify(order));
+      // Call service to create order
+      const response = await createOrder(orderData, cartItems);
       
-      // Clear cart
-      dispatch(clearCart());
-      
-      // Show success message
-      toast.success('Order placed successfully!');
-      
-      // Navigate to confirmation page
-      navigate('/order-confirmation');
-    }, 2000);
+      if (response && response.success) {
+        // Store order in session storage for confirmation page
+        const orderForStorage = {
+          orderNumber,
+          items: cartItems,
+          total: cartAmount,
+          shipping: shippingInfo,
+          payment: {
+            ...paymentInfo,
+            cardNumber: `xxxx-xxxx-xxxx-${paymentInfo.cardNumber.slice(-4)}`
+          },
+          date: new Date().toISOString()
+        };
+        sessionStorage.setItem('lastOrder', JSON.stringify(orderForStorage));
+        
+        // Clear cart
+        dispatch(clearCart());
+        
+        // Show success message and navigate
+        toast.success('Order placed successfully!');
+        navigate('/order-confirmation');
+      }
+    } catch (error) {
+      setOrderError('Failed to place order. Please try again.');
+      toast.error('Failed to place order: ' + (error.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
   };
   
   // Render step content
@@ -364,6 +392,13 @@ const Checkout = () => {
                 <div className="flex justify-between mb-4">
                   <span className="font-semibold">Total Amount:</span>
                   <span className="text-lg font-bold">${cartAmount.toFixed(2)}</span>
+              </div>
+              
+              {/* Display order error if any */}
+              {orderError && (
+              <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+                <p>{orderError}</p>
+              </div>
                 </div>
               </div>
               <div className="flex justify-between">

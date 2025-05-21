@@ -4,10 +4,15 @@ import { getIcon } from '../utils/iconUtils';
 
 const OrderConfirmation = () => {
   const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Retrieve order details from session storage
+    setLoading(true);
+    setError(null);
+    
+    // Retrieve order details from session storage (later this would come from the order service)
     const lastOrder = sessionStorage.getItem('lastOrder');
     
     if (lastOrder) {
@@ -16,9 +21,11 @@ const OrderConfirmation = () => {
       // If no order found, redirect to home
       navigate('/');
     }
+    
+    setLoading(false);
   }, [navigate]);
   
-  if (!order) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-96">
         <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
@@ -30,6 +37,18 @@ const OrderConfirmation = () => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
+  
+  if (error) {
+    return (
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-4">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+          <Link to="/" className="btn-primary mt-4 inline-block">Return to Home</Link>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="max-w-3xl mx-auto">
