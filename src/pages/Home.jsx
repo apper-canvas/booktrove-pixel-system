@@ -93,28 +93,6 @@ const Home = () => {
             })()}
           </a>
         </div>
-        
-          {featuredBooks.map((book) => (
-            <motion.div
-              key={book.id}
-              className="card card-hover"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <div className="relative h-64 overflow-hidden rounded-t-xl">
-                <img 
-                  src={book.cover} alt={book.title} className="w-full h-full object-cover"
-                />
-                <div className="absolute top-2 right-2">
-                  <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded">
-                    ${book.price}
-                  </span>
-                </div>
-              </div>
-              <div className="p-4">
-                <div className="flex items-center mb-1">
-                  <div className="flex">
-                   </div>
         {loading ? (
           <div className="flex justify-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-r-transparent"></div>
