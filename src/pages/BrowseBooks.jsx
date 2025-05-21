@@ -226,10 +226,10 @@ const BrowseBooks = () => {
             <motion.div
               key={book.id}
               className="card card-hover"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300 }}
             >
-              <div className="relative h-64 overflow-hidden rounded-t-xl">
+              <Link to={`/book/${book.id}`} className="cursor-pointer">
+                <motion.div className="relative h-64 overflow-hidden rounded-t-xl"
+                  whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300 }}>
                 <img 
                   src={book.cover} 
                   alt={book.title} 
@@ -240,8 +240,9 @@ const BrowseBooks = () => {
                     ${book.price.toFixed(2)}
                   </span>
                 </div>
-              </div>
-              <div className="p-4">
+                </motion.div>
+              </Link>
+              <div className="p-4" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center mb-1">
                   <div className="flex">
                     {Array.from({ length: 5 }).map((_, i) => {
@@ -256,8 +257,12 @@ const BrowseBooks = () => {
                   </div>
                   <span className="text-xs text-surface-500 ml-1">({book.rating})</span>
                 </div>
-                <h3 className="font-bold text-lg mb-1">{book.title}</h3>
-                <p className="text-surface-600 dark:text-surface-400 text-sm mb-2">by {book.author}</p>
+                <Link to={`/book/${book.id}`}>
+                  <h3 className="font-bold text-lg mb-1 hover:text-primary transition-colors">{book.title}</h3>
+                </Link>
+                <Link to={`/book/${book.id}`}>
+                  <p className="text-surface-600 dark:text-surface-400 text-sm mb-2">by {book.author}</p>
+                </Link>
                 <p className="text-surface-500 dark:text-surface-400 text-sm mb-3 line-clamp-2">{book.description}</p>
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-medium px-2 py-1 bg-surface-100 dark:bg-surface-700 rounded-full">

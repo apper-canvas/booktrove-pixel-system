@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { selectCartItems, selectCartTotal, selectCartAmount, updateQuantity, removeFromCart, clearCart } from './store/cartSlice';
 import BrowseBooks from './pages/BrowseBooks';
+import BookDetail from './pages/BookDetail';
 import SellBooks from './pages/SellBooks';
 
 const App = () => {
@@ -221,6 +222,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/browse" element={<BrowseBooks />} />
+            <Route path="/book/:id" element={<BookDetail />} />
             <Route path="/sell" element={<SellBooks />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
