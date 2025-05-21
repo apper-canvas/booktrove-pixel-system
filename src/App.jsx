@@ -9,6 +9,8 @@ import { selectCartItems, selectCartTotal, selectCartAmount, updateQuantity, rem
 import BrowseBooks from './pages/BrowseBooks';
 import BookDetail from './pages/BookDetail';
 import SellBooks from './pages/SellBooks';
+import Checkout from './pages/Checkout';
+import OrderConfirmation from './pages/OrderConfirmation';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -38,6 +40,7 @@ const App = () => {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef(null);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const cartItemCount = useSelector(selectCartTotal);
@@ -187,9 +190,10 @@ const App = () => {
                     <button 
                       className="btn-primary w-full mb-2"
                       onClick={() => {
-                        toast.success('Proceeding to checkout...');
-                        // In a real app, this would navigate to checkout
+                        setIsCartOpen(false);
+                        navigate('/checkout');
                       }}
+                      disabled={cartItems.length === 0}
                     >
                       Checkout
                     </button>
@@ -224,6 +228,8 @@ const App = () => {
             <Route path="/browse" element={<BrowseBooks />} />
             <Route path="/book/:id" element={<BookDetail />} />
             <Route path="/sell" element={<SellBooks />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
