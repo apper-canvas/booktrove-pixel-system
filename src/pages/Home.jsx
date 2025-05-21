@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { getIcon } from '../utils/iconUtils';
@@ -87,12 +88,12 @@ const Home = () => {
               Browse thousands of books from independent sellers and bookstores around the world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="btn bg-white text-primary hover:bg-surface-100 focus:ring-white">
+              <Link to="/browse" className="btn bg-white text-primary hover:bg-surface-100 focus:ring-white text-center">
                 Browse Books
-              </button>
-              <button className="btn border-2 border-white text-white hover:bg-white/10 focus:ring-white">
+              </Link>
               <Link to="/sell" className="btn border-2 border-white text-white hover:bg-white/10 focus:ring-white text-center">
                 Sell Your Books
+              </Link>
             </div>
           </motion.div>
         </div>
