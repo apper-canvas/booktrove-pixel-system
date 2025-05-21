@@ -131,8 +131,6 @@ const Home = () => {
               return <ArrowRightIcon className="w-4 h-4 ml-1" />;
             })()}
           </a>
-                    <h3 className="text-lg font-semibold mt-2 line-clamp-1 dark:text-surface-100">
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredBooks.map((book) => (
             <motion.div
@@ -144,7 +142,6 @@ const Home = () => {
               <h3 className="font-bold text-sm mb-1 truncate dark:text-surface-100">{book.title}</h3>
               <div className="relative h-64 overflow-hidden rounded-t-xl">
                 <img 
-                    <p className="text-surface-600 dark:text-surface-300 text-sm">
                   alt={book.title} 
                   className="w-full h-full object-cover"
                 />
@@ -186,8 +183,6 @@ const Home = () => {
               </div>
             </motion.div>
           ))}
-                    <h3 className="text-lg font-semibold mt-2 line-clamp-1 dark:text-surface-100">
-      </section>
 
       {/* Benefits Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-10">
@@ -199,7 +194,7 @@ const Home = () => {
           },
           {
             icon: 'shield-check',
-                    <p className="text-surface-600 dark:text-surface-300 text-sm">
+            title: 'Secure Payments',
             description: 'Your payments and personal information are always protected.'
           },
           {
