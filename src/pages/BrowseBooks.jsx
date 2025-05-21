@@ -98,7 +98,7 @@ const BrowseBooks = () => {
             <h3 className="font-bold mb-1 truncate dark:text-surface-100">{book.title}</h3>
     
     // Filter by search query
-    if (searchQuery) {
+                  <h3 className="text-lg font-semibold mt-2 line-clamp-1 dark:text-surface-100">
       result = result.filter(book => 
         book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
         book.author.toLowerCase().includes(searchQuery.toLowerCase())
@@ -111,7 +111,7 @@ const BrowseBooks = () => {
     }
     
     // Sort books
-    switch (selectedSort) {
+                  <p className="text-surface-600 dark:text-surface-300 text-sm">
       case 'price-low':
         result.sort((a, b) => a.price - b.price);
         break;
