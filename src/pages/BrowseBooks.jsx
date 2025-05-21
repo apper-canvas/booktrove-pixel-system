@@ -95,7 +95,7 @@ const BrowseBooks = () => {
 
   // Filter books based on search, genre, and sort
   useEffect(() => {
-    let result = [...books];
+            <h3 className="font-bold mb-1 truncate dark:text-surface-100">{book.title}</h3>
     
     // Filter by search query
     if (searchQuery) {

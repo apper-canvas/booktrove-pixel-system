@@ -140,7 +140,7 @@ const Home = () => {
               className="card card-hover"
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
-            >
+          <h3 className="font-bold text-sm mb-1 truncate dark:text-surface-100">{book.title}</h3>
               <div className="relative h-64 overflow-hidden rounded-t-xl">
                 <img 
                   src={book.cover} 

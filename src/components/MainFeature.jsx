@@ -13,10 +13,10 @@ const MainFeature = () => {
   });
   
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
+              <span className="text-sm font-medium dark:text-surface-200">{book.rating} · {book.reviews} reviews</span>
   const [searchResults, setSearchResults] = useState([]);
   
-  const categories = [
+            <h2 className="text-xl font-bold mb-2 dark:text-surface-100">{book.title}</h2>
     { id: '', name: 'All Categories' },
     { id: 'fiction', name: 'Fiction' },
     { id: 'non-fiction', name: 'Non-Fiction' },
