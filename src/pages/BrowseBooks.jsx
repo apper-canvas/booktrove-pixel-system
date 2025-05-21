@@ -99,7 +99,7 @@ const BrowseBooks = () => {
     let result = [...books];
 
     // Filter by search query
-                  <h3 className="text-lg font-semibold mt-2 line-clamp-1 dark:text-surface-100">
+    if (searchQuery) {
       result = result.filter(book => 
         book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
         book.author.toLowerCase().includes(searchQuery.toLowerCase())
