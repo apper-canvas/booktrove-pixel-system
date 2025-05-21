@@ -229,12 +229,13 @@ const BrowseBooks = () => {
             >
               <Link to={`/book/${book.id}`} className="cursor-pointer">
                 <motion.div className="relative h-64 overflow-hidden rounded-t-xl"
-                  whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300 }}>
-                <img 
-                  src={book.cover} 
-                  alt={book.title} 
-                  className="w-full h-full object-cover"
-                />
+                  whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <img 
+                    src={book.cover} 
+                    alt={book.title} 
+                    className="w-full h-full object-cover"
+                  />
                 <div className="absolute top-2 right-2">
                   <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded">
                     ${book.price.toFixed(2)}

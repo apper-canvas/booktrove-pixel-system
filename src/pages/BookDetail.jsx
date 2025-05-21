@@ -231,7 +231,7 @@ const BookDetail = () => {
             
             <button
               className="btn-accent w-full md:w-auto mb-4"
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart()}
             >
               Add to Cart
             </button>
