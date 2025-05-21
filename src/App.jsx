@@ -9,6 +9,7 @@ import { selectCartItems, selectCartTotal, selectCartAmount, updateQuantity, rem
 import BrowseBooks from './pages/BrowseBooks';
 import BookDetail from './pages/BookDetail';
 import SellBooks from './pages/SellBooks';
+import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 
@@ -48,7 +49,8 @@ const App = () => {
   const cartAmount = useSelector(selectCartAmount);
   
   const toggleCart = () => {
-    setIsCartOpen(prev => !prev);
+    navigate('/cart');
+    // setIsCartOpen(prev => !prev);
   };
   
   
@@ -228,6 +230,7 @@ const App = () => {
             <Route path="/browse" element={<BrowseBooks />} />
             <Route path="/book/:id" element={<BookDetail />} />
             <Route path="/sell" element={<SellBooks />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation" element={<OrderConfirmation />} />
             <Route path="*" element={<NotFound />} />
