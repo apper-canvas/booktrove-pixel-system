@@ -47,14 +47,8 @@ export default {
       }
     }
   },
-  theme: {
-    extend: {
-      // ... existing theme configuration
-      outline: {
-        none: ['2px solid transparent', '2px']
-      }
-    }
-  },
   plugins: [],
   darkMode: 'class',
 }
+
+

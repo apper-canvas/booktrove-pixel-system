@@ -37,7 +37,7 @@
 @layer components {
   .btn {
     @apply px-4 py-2 rounded-lg font-medium transition-all duration-200
-           focus:outline-none focus-visible:outline-none focus-visible:ring-0;
+           focus:outline-none focus-visible:ring-0;
   }
   
   .btn-primary {
