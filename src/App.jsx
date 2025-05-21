@@ -102,7 +102,7 @@ const App = () => {
               {/* Cart Drawer */}
               <div 
                 ref={cartRef}
-                className={`fixed inset-y-0 right-0 z-100 w-full sm:w-96 bg-white dark:bg-surface-800 shadow-xl transform transition-transform duration-300 ease-in-out border border-surface-200 dark:border-surface-700 ${
+                className={`fixed inset-y-0 right-0 z-120 w-full sm:w-96 bg-white dark:bg-surface-800 shadow-xl transform transition-transform duration-300 ease-in-out border border-surface-200 dark:border-surface-700 ${
                   isCartOpen ? 'translate-x-0' : 'translate-x-full'
                 } flex flex-col`}
               >
@@ -213,7 +213,7 @@ const App = () => {
               {/* Overlay when cart is open */}
               {isCartOpen && (
                 <div 
-                  className="fixed inset-0 bg-black/70 z-90"
+                  className="fixed inset-0 bg-black/70 z-110"
                   onClick={toggleCart}
                 />
               )}
