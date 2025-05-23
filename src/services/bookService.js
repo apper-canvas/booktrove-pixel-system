@@ -85,17 +85,17 @@ export const getBooks = async (filters = {}, page = 1, pageSize = 20) => {
       
       switch (filters.sort) {
         case 'price-low':
-          params.orderBy.push({ field: "price", direction: "ASC" });
+          params.orderBy.push({ fieldName: "price", SortType: "ASC" });
           break;
         case 'price-high':
-          params.orderBy.push({ field: "price", direction: "DESC" });
+          params.orderBy.push({ fieldName: "price", SortType: "DESC" });
           break;
         case 'rating':
-          params.orderBy.push({ field: "rating", direction: "DESC" });
+          params.orderBy.push({ fieldName: "rating", SortType: "DESC" });
           break;
         default:
           // Default sorting (featured) - could be by CreatedOn descending
-          params.orderBy.push({ field: "CreatedOn", direction: "DESC" });
+          params.orderBy.push({ fieldName: "CreatedOn", SortType: "DESC" });
       }
     }
 
@@ -104,7 +104,7 @@ export const getBooks = async (filters = {}, page = 1, pageSize = 20) => {
   } catch (error) {
     console.error("Error fetching books:", error);
     throw error;
-  }
+  } 
 };
 
 // Get a single book by ID
@@ -155,8 +155,8 @@ export const getFeaturedBooks = async (limit = 8) => {
       ],
       orderBy: [
         { 
-          field: "rating", 
-          direction: "DESC" 
+          fieldName: "rating", 
+          SortType: "DESC" 
         }
       ],
       pagingInfo: {
@@ -166,9 +166,16 @@ export const getFeaturedBooks = async (limit = 8) => {
     };
 
     const response = await apperClient.fetchRecords("book", params);
+    
+    // Handle the case where no data is returned
+    if (!response || !response.data) {
+      return [];
+    }
+    
     return response.data;
   } catch (error) {
     console.error("Error fetching featured books:", error);
-    throw error;
+    // Return empty array instead of throwing to prevent UI crashes
+    return [];
   }
 };

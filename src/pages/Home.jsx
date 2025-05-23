@@ -8,17 +8,22 @@ import { getFeaturedBooks } from '../services/bookService';
 const Home = () => {
   const [featuredBooks, setFeaturedBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const StarIcon = getIcon('star');
 
   useEffect(() => {
     const loadFeaturedBooks = async () => {
       setIsLoading(true);
+      setError(null);
+      
       try {
         const books = await getFeaturedBooks(8);
-        setFeaturedBooks(books);
+        setFeaturedBooks(books || []);
       } catch (error) {
         console.error("Failed to load featured books:", error);
-        toast.error("Failed to load featured books");
+        setError("Failed to load featured books");
+        setFeaturedBooks([]);
+        toast.error("We couldn't load the featured books. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -26,7 +31,6 @@ const Home = () => {
 
     loadFeaturedBooks();
   }, []);
-
   return (
     <div className="space-y-12">
       {/* Main Banner */}
@@ -52,15 +56,32 @@ const Home = () => {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <div className="bg-red-50 dark:bg-surface-800 border border-red-200 dark:border-red-800 rounded-lg p-6 text-center">
+            <div className="text-red-500 mb-2 text-lg font-semibold">
+              {(() => {
+                const AlertIcon = getIcon('alert-circle');
+                return <AlertIcon className="w-8 h-8 mx-auto mb-2" />;
+              })()}
+              {error}
+            </div>
+            <button onClick={() => window.location.reload()} className="btn btn-primary mt-4">Retry</button>
+          </div>
+        ) : featuredBooks.length === 0 ? (
+          <div className="text-center p-10 bg-surface-100 dark:bg-surface-800 rounded-xl">
+            <p className="text-lg text-surface-600 dark:text-surface-400">No featured books available at the moment.</p>
+            <Link to="/browse" className="btn btn-primary mt-4">Browse All Books</Link>
+          </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {featuredBooks.map(book => (
-              <Link key={book.Id} to={`/book/${book.Id}`} className="group">
-                <div className="card card-hover h-full flex flex-col">
-                  <div className="relative pt-[75%] bg-surface-100 dark:bg-surface-800 overflow-hidden">
-                    <img
-                      src={book.cover || 'https://source.unsplash.com/random/300x400/?book'}
-                      alt={book.title}
+            {featuredBooks.map(book => {
+              return book ? (
+                <Link key={book.Id} to={`/book/${book.Id}`} className="group">
+                  <div className="card card-hover h-full flex flex-col">
+                    <div className="relative pt-[75%] bg-surface-100 dark:bg-surface-800 overflow-hidden">
+                      <img
+                        src={book.cover || 'https://source.unsplash.com/random/300x400/?book'}
+                        alt={book.title || 'Book cover'}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
@@ -77,8 +98,9 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
-            ))}
+                </Link>
+              ) : null;
+            })}
           </div>
         )}
       </section>
