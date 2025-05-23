@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ServiceFeatures from '../components/ServiceFeatures';
 import { getIcon } from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 import { getFeaturedBooks } from '../services/bookService';
@@ -63,6 +64,9 @@ const Home = () => {
                 const AlertIcon = getIcon('alert-circle');
                 return <AlertIcon className="w-8 h-8 mx-auto mb-2" />;
               })()}
+      {/* Service Features Section */}
+      <ServiceFeatures />
+      
               {error}
             </div>
             <button onClick={() => window.location.reload()} className="btn btn-primary mt-4">Retry</button>
