@@ -123,3 +123,52 @@ export const getBookById = async (bookId) => {
     throw error;
   }
 };
+
+// Get featured books for homepage
+export const getFeaturedBooks = async (limit = 8) => {
+  try {
+    const { ApperClient } = window.ApperSDK;
+    const apperClient = new ApperClient({
+      apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+      apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+    });
+
+    // Setup query parameters to get books with highest ratings
+    const params = {
+      fields: [
+        "Id",
+        "Name",
+        "Tags",
+        "title",
+        "author",
+        "description",
+        "price",
+        "cover",
+        "rating",
+        "genre",
+        "condition",
+        "publishDate",
+        "publisher",
+        "pages",
+        "isbn",
+        "language"
+      ],
+      orderBy: [
+        { 
+          field: "rating", 
+          direction: "DESC" 
+        }
+      ],
+      pagingInfo: {
+        limit: limit,
+        offset: 0
+      }
+    };
+
+    const response = await apperClient.fetchRecords("book", params);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching featured books:", error);
+    throw error;
+  }
+};

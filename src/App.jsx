@@ -150,6 +150,11 @@ const App = () => {
         <header className="sticky top-0 z-30 bg-white dark:bg-surface-900 shadow-sm border-b border-surface-200 dark:border-surface-700">
           <div className="container mx-auto px-4 py-3 flex justify-between items-center">
             
+            <div className="flex items-center space-x-6">
+              <a href="/" className="flex items-center">
+                <span className="text-xl font-bold text-primary dark:text-primary-light">BookTrove</span>
+              </a>
+            </div>
             <div className="flex items-center space-x-4">
               <button 
                 onClick={toggleDarkMode}
